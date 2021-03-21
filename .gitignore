@@ -1,0 +1,16 @@
+.vs/
+bin/
+obj/
+Logs
+*.user
+/.idea
+*.suo
+/HarabaDealer/node_modules
+package-lock.json
+/HarabaDealer/dist
+/packages
+/Haraba.Web/Images/
+/HarabaDealer/ImageCache
+__ngcc_entry_points__.json
+*.DotSettings
+.config/
