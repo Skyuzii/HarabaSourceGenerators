@@ -1,4 +1,5 @@
 ﻿using HarabaSourceGenerators.Common.Attributes;
+using HarabaSourceGenerators.Generators.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
@@ -16,15 +17,13 @@ namespace HarabaSourceGenerators.Generators
         public void Execute(GeneratorExecutionContext context)
         {
             var compilation = context.Compilation;
+            var attributeName = nameof(InjectAttribute).Replace("Attribute", string.Empty);
             foreach (var syntaxTree in compilation.SyntaxTrees)
             {
                 var semanticModel = compilation.GetSemanticModel(syntaxTree);
                 var targetTypes = syntaxTree.GetRoot().DescendantNodes()
                     .OfType<ClassDeclarationSyntax>()
-                    .Where(x => x.Members.OfType<FieldDeclarationSyntax>()
-                        .Any(e => e.AttributeLists
-                            .Any(z => z.Attributes
-                                .Any(y => y.Name.ToString() == nameof(InjectAttribute).Replace("Attribute", string.Empty)))))
+                    .Where(x => x.ContainsClassAttribute(attributeName) || x.ContainsFieldAttribute(attributeName))
                     .Select(x => semanticModel.GetDeclaredSymbol(x))
                     .OfType<ITypeSymbol>();
 
@@ -35,6 +34,8 @@ namespace HarabaSourceGenerators.Generators
                 }
             }
         }
+
+       
 
         private string GenerateInjects(ITypeSymbol targetType)
         {
@@ -54,10 +55,15 @@ namespace {targetType.ContainingNamespace}
         private string GenerateConstructor(ITypeSymbol targetType)
         {
             var parameters = new StringBuilder();
+            var fields = targetType.GetAttributes().Any(x => x.AttributeClass.Name == nameof(InjectAttribute)) 
+                            ? targetType.GetMembers()
+                                .OfType<IFieldSymbol>()
+                                .Where(x => x.IsReadOnly && !x.GetAttributes().Any(y => y.AttributeClass.Name == nameof(InjectIgnoreAttribute)))
+                            : targetType.GetMembers()
+                                .OfType<IFieldSymbol>()
+                                .Where(x => x.GetAttributes().Any(y => y.AttributeClass.Name == nameof(InjectAttribute)));
 
-            foreach (var field in targetType.GetMembers()
-                .OfType<IFieldSymbol>()
-                .Where(x => x.GetAttributes().Any(y => y.AttributeClass.Name == nameof(InjectAttribute))))
+            foreach (var field in fields)
             {
                 parameters.AppendLine($"{field.Name} = serviceProvider.GetRequiredService<{field.Type}>();");
             }
