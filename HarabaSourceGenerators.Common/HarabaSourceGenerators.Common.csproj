@@ -2,6 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Skyuzii</Authors>
+    <Company>Haraba</Company>
+    <Product>HarabaSourceGenerators</Product>
+    <RepositoryUrl>https://github.com/Skyuzii/HarabaSourceGenerators</RepositoryUrl>
+    <PackageTags>Analyzer, SourceGenerator</PackageTags>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
 </Project>
