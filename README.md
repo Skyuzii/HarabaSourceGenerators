@@ -7,3 +7,11 @@
 Пора с этим кончать!<br>
 Представляю вашему вниманию новый, удобный и элегантный способ:<br><br>
 ![alt text](https://image.prntscr.com/image/pKnVAJnYSLqlGTy5ZgfmYw.png)
+
+А что, если лень указывать для каждой зависимости атрибут Inject?<br>
+Не проблема:<br><br>
+![alt text](https://image.prntscr.com/image/WH_VuE70SxGT-xqSvu_vhg.png)
+
+Отлично. Но что, если есть поле, которое нужно не для инжекта?<br>
+Указываем для такого поля атрибут InjectIgnore:<br><br>
+![alt text](https://image.prntscr.com/image/I1eSHDglSJewrUg7xlrjYw.png)
