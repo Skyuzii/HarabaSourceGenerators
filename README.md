@@ -1,6 +1,6 @@
 # HarabaSourceGenerators
-![Nuget](https://img.shields.io/nuget/v/HarabaSourceGenerators.Generators)
-![Nuget](https://img.shields.io/nuget/dt/HarabaSourceGenerators.Generators?color=green)
+[![Nuget](https://img.shields.io/nuget/v/HarabaSourceGenerators.Generators)](https://www.nuget.org/packages/HarabaSourceGenerators.Generators/)
+[![Nuget](https://img.shields.io/nuget/dt/HarabaSourceGenerators.Generators?color=green)](https://www.nuget.org/packages/HarabaSourceGenerators.Generators/)
 
 Все мы привыкли инжектить кучу зависимостей в класс и инициализировать их в конструкторе.<br>
 На выходе обычно получаем что-то типа этого:<br><br>
