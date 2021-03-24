@@ -35,13 +35,10 @@ namespace HarabaSourceGenerators.Generators
             }
         }
 
-       
-
         private string GenerateInjects(ITypeSymbol targetType)
         {
             return $@" 
 using System;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace {targetType.ContainingNamespace}
 {{
@@ -55,6 +52,7 @@ namespace {targetType.ContainingNamespace}
         private string GenerateConstructor(ITypeSymbol targetType)
         {
             var parameters = new StringBuilder();
+            var fieldsInitializing = new StringBuilder();
             var fields = targetType.GetAttributes().Any(x => x.AttributeClass.Name == nameof(InjectAttribute)) 
                             ? targetType.GetMembers()
                                 .OfType<IFieldSymbol>()
@@ -65,12 +63,14 @@ namespace {targetType.ContainingNamespace}
 
             foreach (var field in fields)
             {
-                parameters.AppendLine($"{field.Name} = serviceProvider.GetRequiredService<{field.Type}>();");
+                var parameterName = field.Name.TrimStart('_');
+                parameters.Append($"{field.Type} {parameterName},");
+                fieldsInitializing.AppendLine($"this.{field.Name} = {parameterName};");
             }
 
-            return $@"public {targetType.Name}(IServiceProvider serviceProvider)
+            return $@"public {targetType.Name}({parameters.ToString().TrimEnd(',')})
                       {{
-                          {parameters}
+                          {fieldsInitializing}
                       }}";
         }
 
