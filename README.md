@@ -1,4 +1,6 @@
 # HarabaSourceGenerators
+[![Nuget](https://img.shields.io/nuget/v/HarabaSourceGenerators.Generators)](https://www.nuget.org/packages/HarabaSourceGenerators.Generators/)
+[![Nuget](https://img.shields.io/nuget/dt/HarabaSourceGenerators.Generators?color=green)](https://www.nuget.org/packages/HarabaSourceGenerators.Generators/)
 
 Все мы привыкли инжектить кучу зависимостей в класс и инициализировать их в конструкторе.<br>
 На выходе обычно получаем что-то типа этого:<br><br>
@@ -9,7 +11,7 @@
 ![alt text](https://image.prntscr.com/image/pKnVAJnYSLqlGTy5ZgfmYw.png)
 
 А что, если лень указывать для каждой зависимости атрибут Inject?<br>
-Не проблема:<br><br>
+Не проблема, можно указать атрибут Inject для всего класса.<br> В таком случае будут браться все приватные поля с модификатором readonly:<br><br>
 ![alt text](https://image.prntscr.com/image/WH_VuE70SxGT-xqSvu_vhg.png)
 
 Отлично. Но что, если есть поле, которое нужно не для инжекта?<br>
