@@ -61,7 +61,10 @@ namespace {targetType.ContainingNamespace}
                                 .OfType<IFieldSymbol>()
                                 .Where(x => x.GetAttributes().Any(y => y.AttributeClass.Name == nameof(InjectAttribute)));
 
-            foreach (var field in fields)
+            var orderedFields = fields.OrderBy(x => x.GetAttributes()
+                                                     .First(e => e.AttributeClass.Name == nameof(InjectAttribute))
+                                                     .ConstructorArguments.FirstOrDefault().Value ?? default(int)).ToList();
+            foreach (var field in orderedFields)
             {
                 var parameterName = field.Name.TrimStart('_');
                 parameters.Append($"{field.Type} {parameterName},");
