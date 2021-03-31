@@ -56,14 +56,14 @@ namespace {targetType.ContainingNamespace}
             var fields = targetType.GetAttributes().Any(x => x.AttributeClass.Name == nameof(InjectAttribute)) 
                             ? targetType.GetMembers()
                                 .OfType<IFieldSymbol>()
-                                .Where(x => x.IsReadOnly && !x.GetAttributes().Any(y => y.AttributeClass.Name == nameof(InjectIgnoreAttribute)))
+                                .Where(x => !x.IsStatic && x.IsReadOnly && !x.GetAttributes().Any(y => y.AttributeClass.Name == nameof(InjectIgnoreAttribute)))
                             : targetType.GetMembers()
                                 .OfType<IFieldSymbol>()
                                 .Where(x => x.GetAttributes().Any(y => y.AttributeClass.Name == nameof(InjectAttribute)));
 
             var orderedFields = fields.OrderBy(x => x.GetAttributes()
-                                                     .First(e => e.AttributeClass.Name == nameof(InjectAttribute))
-                                                     .ConstructorArguments.FirstOrDefault().Value ?? default(int)).ToList();
+                                                     .FirstOrDefault(e => e.AttributeClass.Name == nameof(InjectAttribute))
+                                                     ?.ConstructorArguments.FirstOrDefault().Value ?? default(int)).ToList();
             foreach (var field in orderedFields)
             {
                 var parameterName = field.Name.TrimStart('_');
