@@ -1,4 +1,4 @@
-# HarabaSourceGenerators
+# <a href="https://habr.com/ru/post/549394/">HarabaSourceGenerators</a>
 [![Nuget](https://img.shields.io/nuget/v/HarabaSourceGenerators.Generators)](https://www.nuget.org/packages/HarabaSourceGenerators.Generators/)
 [![Nuget](https://img.shields.io/nuget/dt/HarabaSourceGenerators.Generators?color=green)](https://www.nuget.org/packages/HarabaSourceGenerators.Generators/)
 
